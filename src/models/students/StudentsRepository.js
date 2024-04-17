@@ -57,7 +57,7 @@ export default class StudentsRepository {
   async addStudent(student) {
     try {
       await this.db.none(
-        "INSERT INTO student (id, name, age) VALUES ($1, $2, $3)",
+        "INSERT INTO student (id, name, age, email, code, grade) VALUES ($1, $2, $3, $4, $5, $6)",
         [student.id, student.name, student.age, student.email, student.code, student.grade]
       );
     } catch (error) {
@@ -68,7 +68,7 @@ export default class StudentsRepository {
   async updateStudent(id, name, age, email, code, grade) {
     try {
       const updatedStudent = await this.db.one(
-        "UPDATE student SET name = $1, age = $2 WHERE id = $3 RETURNING *",
+        "UPDATE student SET name = $1, age = $2, email = $4, code = $5, grade = $6 WHERE id = $3 RETURNING *",
         [name, age, id, email, code, grade]
       );
 
