@@ -7,7 +7,7 @@ export default class StudentsRepository {
 
   async getStudents() {
     try {
-      const allStudents = await this.db.query("SELECT * FROM students");
+      const allStudents = await this.db.query("SELECT * FROM student");
 
       return allStudents;
     } catch (error) {
@@ -28,10 +28,10 @@ export default class StudentsRepository {
     }
   }
 
-  async getStudenByEmail(email) {
+  async getStudentByEmail(email) {
     try {
       const student = await this.db.oneOrNone(
-        "SELECT * FROM students WHERE email = $1",
+        "SELECT * FROM student WHERE email = $1",
         email
       );
 
@@ -44,7 +44,7 @@ export default class StudentsRepository {
   async getStudentByCode(code) {
     try {
       const student = await this.db.oneOrNone(
-        "SELECT * FROM students WHERE code = $1",
+        "SELECT * FROM student WHERE code = $1",
         code
       );
 
@@ -57,7 +57,7 @@ export default class StudentsRepository {
   async addStudent(student) {
     try {
       await this.db.none(
-        "INSERT INTO students (id, name, age) VALUES ($1, $2, $3)",
+        "INSERT INTO student (id, name, age) VALUES ($1, $2, $3)",
         [student.id, student.name, student.age, student.email, student.code, student.grade]
       );
     } catch (error) {
@@ -68,7 +68,7 @@ export default class StudentsRepository {
   async updateStudent(id, name, age, email, code, grade) {
     try {
       const updatedStudent = await this.db.one(
-        "UPDATE students SET name = $1, age = $2 WHERE id = $3 RETURNING *",
+        "UPDATE student SET name = $1, age = $2 WHERE id = $3 RETURNING *",
         [name, age, id, email, code, grade]
       );
 
@@ -81,7 +81,7 @@ export default class StudentsRepository {
   async deleteStudent(id) {
     try {
       const student = await this.db.none(
-        "DELETE FROM students WHERE id = $1 RETURNING *",
+        "DELETE FROM student WHERE id = $1 RETURNING *",
         id
       );
 
