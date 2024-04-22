@@ -13,6 +13,7 @@ const port = process.env.DB_PORT;
 const database = process.env.DB_NAME;
 
 const dbURL = `postgres://${user}:${password}@${host}:${port}/${database}`;
+
 const db = pgp()(dbURL);
 export function connection() {
   
